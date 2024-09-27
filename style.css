@@ -8,7 +8,6 @@
 }
 body {
   background: #fdfdfd;
-  /* background: black; */
   font-family: "Poppins", sans-serif;
 }
 .container {
@@ -150,7 +149,7 @@ body {
   transform: translate(-50%, -50%);
 }
 .task {
-  color: rgba(128, 128, 128, 0.9);
+  color: black;
   font-size: 12px;
   position: relative;
   top: 50%;
@@ -238,7 +237,6 @@ body {
   color: rgba(128, 128, 128, 0.3);
   font-size: 50px;
 }
-/* In your CSS file or <style> tag */
 .task-date {
   color: black;
   font-size: 12px;

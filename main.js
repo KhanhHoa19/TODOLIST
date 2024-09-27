@@ -40,6 +40,7 @@ filter.forEach((btn) => {
 });
 
   // Hien thi danh sach cong viec
+// Update the showTodos function to add draggable attribute to the task-list div
 function showTodos(filter) {
   document.querySelectorAll(".task-list").forEach((todo) => {
     todo.remove();
@@ -54,7 +55,7 @@ function showTodos(filter) {
     
     if (filter == todo.status || filter == "all") {
       liTag += `
-      <div class="task-list">
+      <div class="task-list" draggable="true" ondragstart="drag(event)" id="task-${id}">
         <label for="${id}">
           <input onclick="taskcomplete(this)"
             type="checkbox" id="${id}" class="checkbox"
@@ -83,8 +84,36 @@ function showTodos(filter) {
     <span class="no-task-message">No task here yet</span>`;
 }
 
-
 showTodos("all");
+
+let draggedTask = null;
+
+function drag(event) {
+  draggedTask = event.target;
+  event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+  event.preventDefault();
+  const targetElement = event.target.closest(".task-list");
+
+  if (targetElement && draggedTask) {
+    let taskContainer = document.querySelector(".task-list-container");
+    let referenceTask = targetElement;
+
+    taskContainer.insertBefore(draggedTask, referenceTask.nextSibling);
+
+    draggedTask = null; 
+  }
+}
+
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+const taskListContainer = document.querySelector(".task-list-container");
+taskListContainer.addEventListener("dragover", allowDrop);
+taskListContainer.addEventListener("drop", drop);
 
 
 taskaddbtn.addEventListener("click", (e) => {
@@ -150,6 +179,24 @@ var divlist = document.querySelectorAll(".task-list").length;
 document.querySelector(".number-of-tasks").innerHTML = divlist + " Tasks";
 
 
+let lists = document.getElementsByClassName("task");
+let box = document.getElementsByClassName("task-list-container");
+for(list of lists)
+  {
+   list.addEventListener("dragstart" ,function(e){
+
+    let selected =e.target;
+    box.addEventListener("dragover",function(e){
+      e.prevetDefault(); 
+    });
+    box.addEventListener("drop",function(e){
+      box.appendChild(selected);
+      selected = null;
+    })
+
+   })
+  };
+  
 
 
 
@@ -164,7 +211,6 @@ document.querySelector(".number-of-tasks").innerHTML = divlist + " Tasks";
 
 
 
-///// extra timing function
 const CurrentTime = document.querySelector(".current-time");
 console.log(CurrentTime);
 
